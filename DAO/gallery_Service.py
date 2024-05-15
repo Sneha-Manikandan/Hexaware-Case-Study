@@ -1,47 +1,57 @@
 from Util.DBConn import DBConnection
+from abc import ABC,abstractmethod
+
+class IGalleryService(ABC):
+    @abstractmethod
+    def readGallery(self):
+        pass
+    @abstractmethod
+    def addGallery(self,new_artist):
+        pass
+    @abstractmethod
+    def removeGallery(self,artistId):
+        pass
+    @abstractmethod
+    def updateGallery(self,name, description, location, curator, openingHours, artistID):
+        pass
 class GalleryService(DBConnection):
-    pass
-    # def readGallery(self):
-    #     try:
-    #         self.cursor.execute("select * from movies")
-    #         movies=self.cursor.fetchall()
-    #         for movie in movies:
-    #             print(movie)
-    #         # row one at a time
-    #         # for row in cursor:
-    #         #     print(row)  
-    #     except Exception as e:
-    #         print(e)
+    def readGallery(self):
+        try:
+            self.cursor.execute("select * from gallery")
+            galleries=self.cursor.fetchall()
+            for gallery in galleries:
+                print(gallery)
+ 
+        except Exception as e:
+            print(e)
 
-    # # Task 1
-    # def add_movies(self,movie):
-    #     try:
-    #         self.cursor.execute("INSERT INTO Movies (Title, Year, DirectorId) VALUES(?,?,?)",
-    #                     (movie.title, movie.year, movie.directorId)
-    #                     )
+    def addGallery(self,new_gallery):
+        try:
+            self.cursor.execute("insert INTO Movies (name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?)",
+                        (new_gallery.name, new_gallery.description,new_gallery.location,new_gallery.curator,new_gallery.openingHours, new_gallery.artistID)
+                        )
             
-    #         self.conn.commit() # Permanently store | no commit we can undo 
-    #     except Exception as e:
-    #         print(e)
+            self.conn.commit() 
+        except Exception as e:
+            print(e)
        
-    # # Task 2
-    # def remove_movies(self,MovieId):
-    #     try:
-    #         self.cursor.execute("DELETE FROM Movies WHERE MovieId=?",
-    #                     (MovieId)
-    #                     )
+    def removeGallery(self,galleryName):
+        try:
+            self.cursor.execute("Delete FROM gallery WHERE galleryName=?",
+                        (galleryName)
+                        )
             
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         print(e)
+            self.conn.commit()
+        except Exception as e:
+            print(e)
        
 
-    # def update_movie(self,MovieId,Title,Year,DirectorId):
-    #     try:
-    #         self.cursor.execute("UPDATE Movies SET ?,?,? WHERE MovieId=?",
-    #                     (MovieId,Title,Year,DirectorId)
-    #                     )
-    #         self.conn.commit()
-    #     except Exception as e:
-    #         print(e)
+    def updateGallery(self,name, description, location, curator, openingHours, artistID):
+        try:
+            self.cursor.execute("Update Movies SET ?,?,?,?,?,? WHERE galleryName LIKE ?",
+                        (name, description, location, curator, openingHours, artistID)
+                        )
+            self.conn.commit()
+        except Exception as e:
+            print(e)
             

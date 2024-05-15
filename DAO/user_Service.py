@@ -1,4 +1,19 @@
 from Util.DBConn import DBConnection
+from abc import ABC,abstractmethod
+
+class IArtistService(ABC):
+    @abstractmethod
+    def readArtist(self):
+        pass
+    @abstractmethod
+    def addArtist(self,new_artist):
+        pass
+    @abstractmethod
+    def removeArtist(self,artistId):
+        pass
+    @abstractmethod
+    def updateArtist(self,artistId,name,biography,birthDate,nationality,website,contactInformation):
+        pass
 class UserService(DBConnection):
 
     def readUser(self):

@@ -1,5 +1,5 @@
-from Entity import Artwork,Artist,User,Gallery
-from DAO import ArtworkService,ArtistService,UserService,GalleryService
+from Entity import Artwork,Artist,User,Gallery,User_Favorite_Artwork
+from DAO import ArtworkService,ArtistService,UserService,GalleryService,UserFavoriteArtworkService
 
 
  
@@ -86,6 +86,7 @@ class MainMenu:
     artist_service=ArtistService()
     user_service=UserService()
     gallery_service=GalleryService()
+    user_favorite_artwork_service=UserFavoriteArtworkService()
 
     def artwork_menu(self):
             while True:
@@ -233,8 +234,8 @@ class MainMenu:
                 new_gallery = Gallery(name, description, location, curator, openingHours, artistID)
                 self.gallery_service.addGallery(new_gallery)
             elif choice == 3:
-                galleryID = int(input("Enter the Gallery ID you want to remove: "))
-                self.gallery_service.removeGallery(galleryID)
+                galleryName = int(input("Enter the Gallery Name you want to remove: "))
+                self.gallery_service.removeGallery(galleryName)
             elif choice == 4:
                 galleryID = int(input("Enter the Gallery ID you want to update: "))
                 name = input("Enter Gallery name: ")
@@ -249,6 +250,35 @@ class MainMenu:
             else:
                 print("Invalid")
 
+    def user_favorite_artwork_menu(self):
+        while True:
+            print("""
+                1. Display Favorite Artwork
+                2. Display Favorite Artwork by UserId
+                3. Add Favorite Artwork
+                4. Remove Favorite Artwork
+                5. Exit
+                """)
+            choice = int(input("Enter the choice you want to do: "))
+            if choice == 1:
+                self.user_favorite_artwork_service.getUserFavoriteArtwork()
+            elif choice == 2:
+                self.user_favorite_artwork_service.getUserFavoriteArtwork()
+                userId = input("Enter userId: ")
+                self.user_favorite_artwork_service.getUserFavoriteArtworksbyId(userId)
+            elif choice == 3:
+                userId = input("Enter userId: ")
+                artworkId = input("Enter artworkId: ")
+                new_favoriteArtwork=User_Favorite_Artwork(userId,artworkId)
+                self.user_favorite_artwork_service.addArtworkToFavorite(new_favoriteArtwork)
+            elif choice == 4:
+                userId = input("Enter userId: ")
+                artworkId = input("Enter artworkId: ")
+                self.user_favorite_artwork_service.removeArtworkFromFavorite(userId,artworkId)
+            elif choice == 5:
+                break
+            else:
+                print("Invalid")
 
 def main():
     while True:
@@ -257,7 +287,8 @@ def main():
                 2. Artist Management
                 3. User Management
                 4. Gallery Management
-                5. Exit
+                5. Favorite Artwork Management
+                6. Exit
                 """)
             choice=int(input("Please choose what you want to do: "))
             if(choice==1):
@@ -269,11 +300,14 @@ def main():
             elif(choice==4):
                 main_menu.gallery_menu()
             elif(choice==5):
+                main_menu.gallery_menu()
+            elif(choice==6):
                 print("Thank You !!")
                 main_menu.artwork_service.close()
                 main_menu.artist_service.close()
                 main_menu.user_service.close()
                 main_menu.gallery_service.close()
+                main_menu.user_favorite_artwork_service.close()
                 break
             else:
                 print("Invalid! Enter proper choice")

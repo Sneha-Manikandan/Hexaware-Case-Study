@@ -1,17 +1,35 @@
-# try:
-#             self.cursor.execute("insert into Artwork(artworkID,description,title,creationDate,medium,imageURL,artistID) VALUES(?,?,?,?,?,?,?)",
-#                         (artwork.artworkID,artwork.description,artwork.title,artwork.creationDate,artwork.medium,artwork.imageURL,artwork.artistID)
-#                         )
-            
-#             self.conn.commit() # Permanently store | no commit we can undo 
-#         except Exception as e:
-#             print(e)
-
 from Util.DBConn import DBConnection
-class ArtworkService(DBConnection):
+from abc import ABC,abstractmethod
+
+class IArtworkService(ABC):
+    @abstractmethod
+    def readArtwork(self):
+        pass
+    @abstractmethod
+    def getArtworkById(self,artworkId):
+        pass
+    @abstractmethod
+    def addArtwork(self,new_artwork):
+        pass
+    @abstractmethod
+    def removeArtwork(self,artworkId):
+        pass
+    @abstractmethod
+    def updateArtwork(self,artworkId,description,title,creationDate,medium,imageURL,artistID):
+        pass
+class ArtworkService(IArtworkService,DBConnection):
     def readArtwork(self):
         try:
             self.cursor.execute("select * from artwork")
+            artworks=self.cursor.fetchall()
+            for artwork in artworks:
+                print(artwork)
+        except Exception as e:
+            print(e)
+    
+    def getArtworkById(self,artworkId):
+        try:
+            self.cursor.execute("select * from artwork where artworkId=?",(artworkId))
             artworks=self.cursor.fetchall()
             for artwork in artworks:
                 print(artwork)
