@@ -1,0 +1,8 @@
+class Gallery:
+    def __init__(self, galleryID, name, description, location, curator, openingHours):
+        self.galleryID = galleryID
+        self.name = name
+        self.description = description
+        self.location = location
+        self.curator = curator
+        self.openingHours = openingHours
