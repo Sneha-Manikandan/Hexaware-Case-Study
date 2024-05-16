@@ -41,7 +41,7 @@ class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection,):
         try:
             self.cursor.execute("insert into User_Favorite_Artwork(userId,artworkId) values(?,?)",
                                 (new_favoriteArtwork.userId,new_favoriteArtwork.artworkId))
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
 
@@ -49,6 +49,7 @@ class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection,):
         try:
             self.cursor.execute("delete from User_Favorite_Artwork where userId=? AND artworkId=?",
                                 (userId,artworkId))
+            # self.conn.commit()
         except Exception as e:
             print(e)
     

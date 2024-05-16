@@ -50,10 +50,10 @@ class ArtworkService(IArtworkService,DBConnection):
  
     def removeArtwork(self,artworkId):
         try:
-            self.cursor.execute("delete from artwork where artworkId=?",
-                        (artworkId)
-                        )
-            
+            self.cursor.execute("Delete FROM User_Favorite_Artwork WHERE artworkId = ?", (artworkId,))
+            self.cursor.execute("DELETE FROM Artwork_Gallery WHERE artworkId = ?", (artworkId,))
+            self.cursor.execute("Delete from artwork where artworkId=?",(artworkId))
+           
             self.conn.commit()
         except Exception as e:
             print(e)
@@ -61,8 +61,8 @@ class ArtworkService(IArtworkService,DBConnection):
 
     def updateArtwork(self,artworkId,description,title,creationDate,medium,imageURL,artistID):
         try:
-            self.cursor.execute("update artwork SET ?,?,?,?,?,?,? WHERE artworkId=?",
-                        (artworkId,description,title,creationDate,medium,imageURL,artistID)
+            self.cursor.execute("update artwork SET description = ?, title = ?, creationDate = ?, medium = ?, imageURL = ?, artistID = ? WHERE artworkId = ? ",
+                        (description,title,creationDate,medium,imageURL,artistID,artworkId)
                         )
             self.conn.commit()
         except Exception as e:

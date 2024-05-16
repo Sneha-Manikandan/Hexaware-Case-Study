@@ -2,7 +2,7 @@ class PropertyUtil:
     @staticmethod
     def get_property_string():
         server_name="LAPTOP-JS8BDPBR\MSSQLSERVER01"
-        database_name="casestudy"
+        database_name="VirtualArtGallery"
 
         conn_str = (
             f"Driver={{SQL Server}};"

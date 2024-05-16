@@ -27,31 +27,30 @@ class GalleryService(IGalleryService,DBConnection):
 
     def addGallery(self,new_gallery):
         try:
-            self.cursor.execute("insert INTO Movies (name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?)",
-                        (new_gallery.name, new_gallery.description,new_gallery.location,new_gallery.curator,new_gallery.openingHours, new_gallery.artistID)
+            self.cursor.execute("insert INTO gallery (galleryId,name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?,?)",
+                        (new_gallery.galleryId,new_gallery.name, new_gallery.description,new_gallery.location,new_gallery.curator,new_gallery.openingHours, new_gallery.artistID)
                         )
             
-            self.conn.commit() 
+            # self.conn.commit() 
         except Exception as e:
             print(e)
        
-    def removeGallery(self,galleryName):
+    def removeGallery(self,galleryId):
         try:
-            self.cursor.execute("Delete FROM gallery WHERE galleryName=?",
-                        (galleryName)
-                        )
+            self.cursor.execute("Delete from artwork_gallery where galleryId=?",(galleryId))
+            self.cursor.execute("Delete FROM gallery WHERE galleryId=?",(galleryId))                                   
             
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
        
 
-    def updateGallery(self,name, description, location, curator, openingHours, artistID):
+    def updateGallery(self,galleryId,name, description, location, curator, openingHours, artistID):
         try:
-            self.cursor.execute("Update Movies SET ?,?,?,?,?,? WHERE galleryName LIKE ?",
-                        (name, description, location, curator, openingHours, artistID)
+            self.cursor.execute("Update gallery SET name = ?, description = ?, location = ?, curator = ?, openingHours = ?, artistID = ? WHERE galleryId= ?",
+                        (name, description, location, curator, openingHours, artistID,galleryId)
                         )
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
             

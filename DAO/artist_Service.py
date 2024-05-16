@@ -26,31 +26,33 @@ class ArtistService(IArtistService,DBConnection):
 
     def addArtist(self,new_artist):
         try:
-            self.cursor.execute("insert INTO artist (artistId,name,biography,birthDate,nationality,website,contactInformation) VALUES(?,?,?,?.?,?,?)",
+            self.cursor.execute("insert INTO artist (artistId,name,biography,birthDate,nationality,website,contactInformation) VALUES(?,?,?,?,?,?,?)",
                         (new_artist.artistId,new_artist.name,new_artist.biography,new_artist.birthDate,new_artist.nationality,new_artist.website,new_artist.contactInformation)
                         )
             
-            self.conn.commit() 
+            # self.conn.commit() 
         except Exception as e:
             print(e)
 
     def removeArtist(self,artistId):
         try:
-            self.cursor.execute("delete FROM artist WHERE artistId=?",
-                        (artistId)
-                        )
-            
-            self.conn.commit()
+            self.cursor.execute("DELETE FROM Artwork_Gallery WHERE artworkID IN (SELECT artworkID FROM Artwork WHERE artistID = ?)", (artistId,))
+            self.cursor.execute("DELETE FROM User_Favorite_Artwork WHERE artworkID IN (SELECT artworkID FROM Artwork WHERE artistID = ?)", (artistId,))
+            self.cursor.execute("delete FROM gallery WHERE artistId=?",(artistId))
+            self.cursor.execute("delete FROM artwork WHERE artistId=?",(artistId))
+            self.cursor.execute("delete FROM artist WHERE artistId=?",(artistId))
+                        
+            # self.conn.commit()
         except Exception as e:
             print(e)
        
 
     def updateArtist(self,artistId,name,biography,birthDate,nationality,website,contactInformation):
         try:
-            self.cursor.execute("UPDATE Movies SET ?,?,?,?,?,?,? WHERE ArtistId=?",
-                        (artistId,name,biography,birthDate,nationality,website,contactInformation)
+            self.cursor.execute("Update Artist SET name = ?, biography = ?, birthDate = ?, nationality = ?, website = ?, contactInformation = ? WHERE ArtistId=?",
+                        (name,biography,birthDate,nationality,website,contactInformation,artistId)
                         )
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
             

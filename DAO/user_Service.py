@@ -29,11 +29,11 @@ class UserService(IUserService,DBConnection):
 
     def addUser(self,new_user):
         try:
-            self.cursor.execute("Insert INTO userTable (userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks) VALUES(?,?,?,?,?,?,?,?,?)",
-                        (new_user.userId,new_user.username,new_user.password,new_user.email,new_user.firstName,new_user.lastName,new_user.dateOfBirth,new_user.picture,new_user.favoriteArtworks)
+            self.cursor.execute("Insert INTO userTable (userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks) VALUES(?,?,?,?,?,?,?,?,?)",
+                        (new_user.userId,new_user.username,new_user.password,new_user.email,new_user.firstName,new_user.lastName,new_user.dateOfBirth,new_user.profilePicture,new_user.favoriteArtworks)
                         )
             
-            self.conn.commit()  
+            # self.conn.commit()  
         except Exception as e:
             print(e)
        
@@ -44,17 +44,17 @@ class UserService(IUserService,DBConnection):
                         (UserId)
                         )
             
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
        
 
-    def updateUser(self,userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks):
+    def updateUser(self,userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks):
         try:
-            self.cursor.execute("UPDATE UserTable SET ?,?,?,?,?,?,?,?,? WHERE userId=?",
-                        (userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks)
+            self.cursor.execute("Update UserTable SET username = ?, password = ?, email = ?, firstName = ?, lastName = ?, dateOfBirth = ?, profilePicture = ?, favoriteArtworks = ? WHERE userId=?",
+                        (username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks,userId)
                         )
-            self.conn.commit()
+            # self.conn.commit()
         except Exception as e:
             print(e)
             
