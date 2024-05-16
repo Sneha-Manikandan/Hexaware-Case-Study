@@ -1,6 +1,6 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
-from Exception import ArtworkNotFoundException
+from myexceptions import ArtworkNotFoundException
 
 class IArtworkService(ABC):
     @abstractmethod

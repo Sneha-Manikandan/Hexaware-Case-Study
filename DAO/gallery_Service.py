@@ -30,7 +30,7 @@ class GalleryService(IGalleryService,DBConnection):
             self.cursor.execute("insert INTO gallery (galleryId,name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?,?)",
                                 (galleryId,name, description, location, curator, openingHours, artistId))
             
-            # self.conn.commit() 
+            self.conn.commit() 
         except Exception as e:
             print(e)
        
@@ -39,7 +39,7 @@ class GalleryService(IGalleryService,DBConnection):
             self.cursor.execute("Delete from artwork_gallery where galleryId=?",(galleryId))
             self.cursor.execute("Delete FROM gallery WHERE galleryId=?",(galleryId))                                   
             
-            # self.conn.commit()
+            self.conn.commit()
         except Exception as e:
             print(e)
        
@@ -49,7 +49,7 @@ class GalleryService(IGalleryService,DBConnection):
             self.cursor.execute("Update gallery SET name = ?, description = ?, location = ?, curator = ?, openingHours = ?, artistID = ? WHERE galleryId= ?",
                         (name, description, location, curator, openingHours, artistID,galleryId)
                         )
-            # self.conn.commit()
+            self.conn.commit()
         except Exception as e:
             print(e)
             

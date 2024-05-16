@@ -1,4 +1,4 @@
-from Exception import UserNotFoundException
+from myexceptions import UserNotFoundException
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
 
