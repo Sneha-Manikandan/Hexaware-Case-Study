@@ -35,6 +35,7 @@ class MainMenu:
                     artworkId=input("Enter the artworkId you want to remove: ")
                     self.artwork_service.removeArtwork(artworkId)
                 elif choice==4:
+                    self.artwork_service.readArtwork()
                     artworkId=input("Enter the ArtworkId you want to update: ")
                     description=input("Enter the description of the artwork: ")
                     title=input("Enter the title of the artwork: ")
@@ -73,9 +74,11 @@ class MainMenu:
                 new_artist=Artist(artistId,name,biography,birthDate,nationality,website,contactInformation)
                 self.artist_service.addArtist(new_artist)
             elif choice==3:
+                self.artist_service.readArtist()
                 artistId=int(input("Enter the Artist ID you want to remove: "))
                 self.artist_service.removeArtist()
             elif choice==4:
+                self.artist_service.readArtist()
                 artistId=int(input("Enter the Artist ID you want to update: "))
                 name=input("Enter Artist name: ")
                 biography=input("Enter Artist biography: ")
@@ -114,9 +117,11 @@ class MainMenu:
                 new_user=User(artistId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks)
                 self.artist_service.addUser(new_user)
             elif choice==3:
+                self.user_service.readUser()
                 userId=int(input("Enter the user ID you want to remove: "))
                 self.user_service.removeUser(userId)
             elif choice==4:
+                self.user_service.readUser()
                 userId=int(input("Enter the User ID you want to update: "))
                 username=input("Enter Artist name: ")
                 password=input("Enter Artist biography: ")
@@ -154,9 +159,11 @@ class MainMenu:
                 new_gallery = Gallery(name, description, location, curator, openingHours, artistID)
                 self.gallery_service.addGallery(new_gallery)
             elif choice == 3:
+                self.gallery_service.readGallery()
                 galleryName = int(input("Enter the Gallery Name you want to remove: "))
                 self.gallery_service.removeGallery(galleryName)
             elif choice == 4:
+                self.gallery_service.readGallery()
                 galleryID = int(input("Enter the Gallery ID you want to update: "))
                 name = input("Enter Gallery name: ")
                 description = input("Enter Gallery description: ")
