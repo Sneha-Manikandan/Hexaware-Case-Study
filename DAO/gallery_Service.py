@@ -14,7 +14,7 @@ class IGalleryService(ABC):
     @abstractmethod
     def updateGallery(self,name, description, location, curator, openingHours, artistID):
         pass
-class GalleryService(DBConnection):
+class GalleryService(IGalleryService,DBConnection):
     def readGallery(self):
         try:
             self.cursor.execute("select * from gallery")

@@ -7,18 +7,18 @@ class IUserFavoriterArtwork(ABC):
         pass
 
     @abstractmethod
-    def getUserFavoriteArtworksbyId(self):
+    def getUserFavoriteArtworksbyId(self,userId):
         pass
     
     @abstractmethod
-    def addArtworkToFavorite(self):
+    def addArtworkToFavorite(self,new_favoriteArtwork):
         pass
 
     @abstractmethod
-    def removeArtworkFromFavorite(self):
+    def removeArtworkFromFavorite(self,userId,artworkId):
         pass
 
-class UserFavoriteArtworkService(IUserFavoriterArtwork):
+class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection,):
     def getUserFavoriteArtwork(self):
         try:
             self.cursor.execute("select * from User_Favorite_Artwork")
@@ -28,7 +28,7 @@ class UserFavoriteArtworkService(IUserFavoriterArtwork):
         except Exception as e:
             print(e)
 
-    def getUserFavoriteArtworksId(self,userId):
+    def getUserFavoriteArtworksbyId(self,userId):
         try:
             self.cursor.execute("select * from User_Favorite_Artwork where userId=?",(userId))
             favorite_artwork=self.cursor.fetchall()

@@ -1,88 +1,8 @@
 from Entity import Artwork,Artist,User,Gallery,User_Favorite_Artwork
 from DAO import ArtworkService,ArtistService,UserService,GalleryService,UserFavoriteArtworkService
 
-
- 
- 
-# cursor.execute("Select 1")
-# print("Database connection is successful 🎊")
-
-
-
-class IVirtualArtGallery:
-    # Artwork Management
-
-    def addArtwork(self, artwork):
-        pass
-    
-   
-    def updateArtwork(self, artwork):
-        pass
-    
-
-    def removeArtwork(self, artworkID):
-        pass
-    
-
-    def getArtworkById(self, artworkID):
-        pass
-    
-
-    def searchArtworks(self, keyword):
-        pass
-    
-    # User Favorites
- 
-    def addArtworkToFavorite(self, userID, artworkID):
-        pass
-    
-
-    def removeArtworkFromFavorite(self, userID, artworkID):
-        pass
-    
-
-    def getUserFavoriteArtworks(self, userID):
-        pass
-
-
-class VirtualArtGallery(IVirtualArtGallery):
-    # Artwork Management
-
-    def addArtwork(self, artwork):
-        pass
-    
-   
-    def updateArtwork(self, artwork):
-        pass
-    
-
-    def removeArtwork(self, artworkID):
-        pass
-    
-
-    def getArtworkById(self, artworkID):
-        pass
-    
-
-    def searchArtworks(self, keyword):
-        pass
-    
-    # User Favorites
- 
-    def addArtworkToFavorite(self, userID, artworkID):
-        pass
-    
-
-    def removeArtworkFromFavorite(self, userID, artworkID):
-        pass
-    
-
-    def getUserFavoriteArtworks(self, userID):
-        pass
-
-
 class MainMenu:  
-    artwork_service=ArtworkService() # no parameter needed since base and child class has no parameter
+    artwork_service=ArtworkService() 
     artist_service=ArtistService()
     user_service=UserService()
     gallery_service=GalleryService()

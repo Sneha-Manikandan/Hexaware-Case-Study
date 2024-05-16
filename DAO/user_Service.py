@@ -1,20 +1,20 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
 
-class IArtistService(ABC):
+class IUserService(ABC):
     @abstractmethod
-    def readArtist(self):
+    def readUser(self):
         pass
     @abstractmethod
-    def addArtist(self,new_artist):
+    def addUser(self,new_user):
         pass
     @abstractmethod
-    def removeArtist(self,artistId):
+    def removeUser(self,userId):
         pass
     @abstractmethod
-    def updateArtist(self,artistId,name,biography,birthDate,nationality,website,contactInformation):
+    def updateUser(self,userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks):
         pass
-class UserService(DBConnection):
+class UserService(IUserService,DBConnection):
 
     def readUser(self):
         try:
@@ -49,7 +49,7 @@ class UserService(DBConnection):
             print(e)
        
 
-    def update_movie(self,userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks):
+    def updateUser(self,userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks):
         try:
             self.cursor.execute("UPDATE UserTable SET ?,?,?,?,?,?,?,?,? WHERE userId=?",
                         (userId,username,password,email,firstName,lastName,dateOfBirth,picture,favoriteArtworks)
