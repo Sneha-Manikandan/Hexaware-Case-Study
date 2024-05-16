@@ -1,5 +1,6 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
+from Exception import ArtworkNotFoundException
 
 class IArtworkService(ABC):
     @abstractmethod
@@ -30,11 +31,17 @@ class ArtworkService(IArtworkService,DBConnection):
     def getArtworkById(self,artworkId):
         try:
             self.cursor.execute("select * from artwork where artworkId=?",(artworkId))
-            artworks=self.cursor.fetchall()
-            for artwork in artworks:
+            artwork=self.cursor.fetchone()
+            if artwork is None:
+                raise ArtworkNotFoundException(artworkId)
+            else:
                 print(artwork)
+
+        except ArtworkNotFoundException as e:
+            print("Error!!",e)
+
         except Exception as e:
-            print(e)
+            print("Error!!",e)
 
     def addArtwork(self,new_artwork):
         try:
@@ -44,21 +51,18 @@ class ArtworkService(IArtworkService,DBConnection):
 
             self.conn.commit() 
         except Exception as e:
-            print(e)
+            print("Error!!",e)
         
-       
- 
     def removeArtwork(self,artworkId):
         try:
             self.cursor.execute("Delete FROM User_Favorite_Artwork WHERE artworkId = ?", (artworkId,))
-            self.cursor.execute("DELETE FROM Artwork_Gallery WHERE artworkId = ?", (artworkId,))
+            self.cursor.execute("Delete FROM Artwork_Gallery WHERE artworkId = ?", (artworkId,))
             self.cursor.execute("Delete from artwork where artworkId=?",(artworkId))
            
             self.conn.commit()
         except Exception as e:
             print(e)
        
-
     def updateArtwork(self,artworkId,description,title,creationDate,medium,imageURL,artistID):
         try:
             self.cursor.execute("update artwork SET description = ?, title = ?, creationDate = ?, medium = ?, imageURL = ?, artistID = ? WHERE artworkId = ? ",

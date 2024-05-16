@@ -12,15 +12,19 @@ class MainMenu:
             while True:
                 print("""
                     1. View all artworks
-                    2. Add artwork
-                    3. Delete artwork
-                    4. Update artwork
-                    5. Exit
+                    2. Get Artwork by Id
+                    3. Add artwork
+                    4. Delete artwork
+                    5. Update artwork
+                    6. Exit
                     """)
                 choice=int(input("Please choose what you want to do: "))
                 if choice==1:
                     self.artwork_service.readArtwork()
                 elif choice==2:
+                    artworkId=int(input("Enter Artwork Id: "))
+                    self.artwork_service.getArtworkById(artworkId)
+                elif choice==3:
                     artworkId=int(input("Enter the id of the artwork: "))
                     description=input("Enter the description of the artwork: ")
                     title=input("Enter the title of the artwork: ")
@@ -30,11 +34,11 @@ class MainMenu:
                     artistID=input("Enter artist id: ")
                     new_artwork=Artwork(artworkId,description,title,creationDate,medium,imageURL,artistID)
                     self.artwork_service.addArtwork(new_artwork)
-                elif choice==3:
+                elif choice==4:
                     self.artwork_service.readArtwork()
                     artworkId=input("Enter the artworkId you want to remove: ")
                     self.artwork_service.removeArtwork(artworkId)
-                elif choice==4:
+                elif choice==5:
                     self.artwork_service.readArtwork()
                     artworkId=input("Enter the ArtworkId you want to update: ")
                     description=input("Enter the description of the artwork: ")
@@ -44,7 +48,7 @@ class MainMenu:
                     imageURL=input("Give the url of the artwork: ")
                     artistID=input("Enter artist id: ")
                     self.artwork_service.updateArtwork(artworkId,description,title,creationDate,medium,imageURL,artistID)
-                elif choice==5:
+                elif choice==6:
                     print("Thank You !!!")
                     break
                 else:
@@ -96,15 +100,19 @@ class MainMenu:
         while True:
             print("""
                   1. Display User
-                  2. Add User
-                  3. Remove User
-                  4. Update User
-                  5. Exit
+                  2. Display User By Id
+                  3. Add User
+                  4. Remove User
+                  5. Update User
+                  6. Exit
                   """)
             choice=int(input("Enter the choice you want to do: "))
             if choice==1:
                 self.user_service.readUser()
             elif choice==2:
+                userId=int(input("Enter UserId: "))
+                self.user_service.readUserById(userId)
+            elif choice==3:
                 userId=int(input("Enter the User ID: "))
                 username=input("Enter Username: ")
                 password=input("Enter Password: ")
@@ -116,11 +124,11 @@ class MainMenu:
                 favoriteArtworks=input("Enter Favorite Artist Id: ")
                 new_user=User(userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks)
                 self.user_service.addUser(new_user)
-            elif choice==3:
+            elif choice==4:
                 self.user_service.readUser()
                 userId=int(input("Enter the user ID you want to remove: "))
                 self.user_service.removeUser(userId)
-            elif choice==4:
+            elif choice==5:
                 self.user_service.readUser()
                 userId=int(input("Enter the User ID: "))
                 username=input("Enter Username: ")
@@ -132,7 +140,7 @@ class MainMenu:
                 profilePicture=input("Upload Picture: ")
                 favoriteArtworks=input("Enter Favorite Artist Id: ")
                 self.user_service.updateUser(userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks)
-            elif choice==5:
+            elif choice==6:
                 break
             else:
                 print("Invalid")
@@ -157,8 +165,7 @@ class MainMenu:
                 curator = input("Enter Gallery curator: ")
                 openingHours = input("Enter Gallery opening hours: ")
                 artistId = int(input("Enter Artist ID: "))
-                new_gallery = Gallery(galleryId,name, description, location, curator, openingHours, artistId)
-                self.gallery_service.addGallery(new_gallery)
+                self.gallery_service.addGallery(galleryId,name, description, location, curator, openingHours, artistId)
             elif choice == 3:
                 self.gallery_service.readGallery()
                 galleryId = int(input("Enter the Gallery Id you want to remove: "))
@@ -228,7 +235,7 @@ def main():
             elif(choice==4):
                 main_menu.gallery_menu()
             elif(choice==5):
-                main_menu.gallery_menu()
+                main_menu.user_favorite_artwork_menu()
             elif(choice==6):
                 print("Thank You !!")
                 main_menu.artwork_service.close()

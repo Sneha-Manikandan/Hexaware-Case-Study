@@ -1,3 +1,4 @@
+from Exception import UserNotFoundException
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
 
@@ -26,6 +27,19 @@ class UserService(IUserService,DBConnection):
         except Exception as e:
             print(e)
 
+    def readUserById(self,userId):
+        try:
+            self.cursor.execute("select * from UserTable where userId=?",(userId))
+            user=self.cursor.fetchone()
+            if user is None:
+                raise UserNotFoundException(userId)
+            else:
+                print(user)
+        except UserNotFoundException as e:
+            print("Error!!",e)
+        
+        except Exception as e:
+            print(e)
 
     def addUser(self,new_user):
         try:
@@ -33,7 +47,7 @@ class UserService(IUserService,DBConnection):
                         (new_user.userId,new_user.username,new_user.password,new_user.email,new_user.firstName,new_user.lastName,new_user.dateOfBirth,new_user.profilePicture,new_user.favoriteArtworks)
                         )
             
-            # self.conn.commit()  
+            self.conn.commit()  
         except Exception as e:
             print(e)
        
@@ -44,7 +58,7 @@ class UserService(IUserService,DBConnection):
                         (UserId)
                         )
             
-            # self.conn.commit()
+            self.conn.commit()
         except Exception as e:
             print(e)
        

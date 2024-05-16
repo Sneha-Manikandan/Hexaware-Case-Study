@@ -25,11 +25,10 @@ class GalleryService(IGalleryService,DBConnection):
         except Exception as e:
             print(e)
 
-    def addGallery(self,new_gallery):
+    def addGallery(self,galleryId,name, description, location, curator, openingHours, artistId):
         try:
             self.cursor.execute("insert INTO gallery (galleryId,name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?,?)",
-                        (new_gallery.galleryId,new_gallery.name, new_gallery.description,new_gallery.location,new_gallery.curator,new_gallery.openingHours, new_gallery.artistID)
-                        )
+                                (galleryId,name, description, location, curator, openingHours, artistId))
             
             # self.conn.commit() 
         except Exception as e:
