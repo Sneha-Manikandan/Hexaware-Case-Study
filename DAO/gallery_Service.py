@@ -1,6 +1,7 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
 
+
 class IGalleryService(ABC):
     @abstractmethod
     def readGallery(self):
@@ -20,10 +21,12 @@ class GalleryService(IGalleryService,DBConnection):
             self.cursor.execute("select * from gallery")
             galleries=self.cursor.fetchall()
             for gallery in galleries:
-                print(gallery)
+                 print(gallery)
+            return galleries
  
         except Exception as e:
             print(e)
+            return None
 
     def addGallery(self,galleryId,name, description, location, curator, openingHours, artistId):
         try:
@@ -31,8 +34,10 @@ class GalleryService(IGalleryService,DBConnection):
                                 (galleryId,name, description, location, curator, openingHours, artistId))
             
             self.conn.commit() 
+            return galleryId
         except Exception as e:
             print(e)
+            return None
        
     def removeGallery(self,galleryId):
         try:
@@ -50,6 +55,7 @@ class GalleryService(IGalleryService,DBConnection):
                         (name, description, location, curator, openingHours, artistID,galleryId)
                         )
             self.conn.commit()
+            return True
         except Exception as e:
             print(e)
-            
+            return False

@@ -25,8 +25,10 @@ class ArtworkService(IArtworkService,DBConnection):
             artworks=self.cursor.fetchall()
             for artwork in artworks:
                 print(artwork)
+            return artworks
         except Exception as e:
             print(e)
+            return None
     
     def getArtworkById(self,artworkId):
         try:
@@ -50,8 +52,10 @@ class ArtworkService(IArtworkService,DBConnection):
                         )
 
             self.conn.commit() 
+            return new_artwork.artworkId
         except Exception as e:
             print("Error!!",e)
+            return None
         
     def removeArtwork(self,artworkId):
         try:
@@ -69,6 +73,7 @@ class ArtworkService(IArtworkService,DBConnection):
                         (description,title,creationDate,medium,imageURL,artistID,artworkId)
                         )
             self.conn.commit()
+            return True
         except Exception as e:
             print(e)
-            
+            return False
