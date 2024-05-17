@@ -52,7 +52,7 @@ class ArtworkService(IArtworkService,DBConnection):
                         )
 
             self.conn.commit() 
-            return new_artwork.artworkId
+            return new_artwork.artworkID
         except Exception as e:
             print("Error!!",e)
             return None

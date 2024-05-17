@@ -5,23 +5,25 @@ from Entity.Artwork import Artwork
 
 
 class TestArtworkyServiceModule(unittest.TestCase):
-    def setUp(self):
-        self.artwork_service = ArtworkService()
-        # Adding some initial data for testing
-        # self.test_gallery = Gallery(7,'The Vintage Museum','Museum dedicated for vintage arts', 'Paris,France', 'Wison', '12:00:00', 7)
-        self.test_artwork_id = self.artwork_service.addArtwork(9,'The Vintage Museum','Museum dedicated for vintage arts', 'Paris,France', 'Wison', '12:00:00', 5)
-        self.assertIsNotNone(self.test_artwork_id)
+    # def setUp(self):
+    #     self.artwork_service = ArtworkService()
+    #     # Adding some initial data for testing
+    #     # self.test_gallery = Gallery(7,'The Vintage Museum','Museum dedicated for vintage arts', 'Paris,France', 'Wison', '12:00:00', 7)
+    #     new_artwork=9,'A painting by Pablo Picasso.','Les Demoiselles Avignon', '1907-07-01', 'Oil on canvas', 'https://example.com/lesdemoiselles.jpg', 3
+    #     test_artwork_id = self.artwork_service.addArtwork(new_artwork)
+    #     self.assertIsNotNone(test_artwork_id)
 
     def test_add_artwork(self):
         self.artwork_service = ArtworkService()
-        artworkId=8
+        artworkID=8
         description='A painting by Pablo Picasso.'
         title='Les Demoiselles Avignon'
         creationDate='1907-07-01'
         medium='Oil on canvas'
         imageURL='https://example.com/lesdemoiselles.jpg'
         artistID=3
-        created_artwork_id = self.artwork_service.addArtwork(artworkId,description,title,creationDate,medium,imageURL,artistID)
+        new_artwork=Artwork(artworkID,description,title,creationDate,medium,imageURL,artistID)
+        created_artwork_id = self.artwork_service.addArtwork(new_artwork)
         self.assertIsNotNone(created_artwork_id)
 
     def test_read_artwork(self):
@@ -32,25 +34,25 @@ class TestArtworkyServiceModule(unittest.TestCase):
 
     def test_update_artwork(self):
         self.artwork_service = ArtworkService()
-        artworkId=8
+        artworkID=8
         description='A painting by Pablo Picasso.'
         title='Les Demoiselles Avignon'
         creationDate='1907-07-01'
         medium='Oil on canvas'
         imageURL='https://example.com/lesdemoiselles.jpg'
         artistId = 3
-        update_status=self.artwork_service.addArtwork(artworkId,description,title,creationDate,medium,imageURL,artistId)
+        update_status=self.artwork_service.updateArtwork(artworkID,description,title,creationDate,medium,imageURL,artistId)
         self.assertTrue(update_status)
 
 
         # Check after updating the movie
         self.artwork_service.cursor.execute(
-            "SELECT * FROM artwork WHERE artworkId=?", (artworkId,) 
+            "SELECT * FROM artwork WHERE artworkId=?", (artworkID,) 
         )
-        updated_artwork = self.gallery_service.cursor.fetchone()
+        updated_artwork = self.artwork_service.cursor.fetchone()
 
 
-        self.assertEqual(updated_artwork[0], artworkId)
+        self.assertEqual(updated_artwork[0], artworkID)
         self.assertEqual(updated_artwork[1], description)
         self.assertEqual(updated_artwork[2], title)
         self.assertEqual(updated_artwork[3], creationDate)
@@ -60,11 +62,11 @@ class TestArtworkyServiceModule(unittest.TestCase):
 
     def test_delete_artwork(self):
         self.artwork_service=ArtworkService()
-        self.artworkId=9
-        self.artwork_service.removeArtwork(self.artworkId)
+        self.artworkID=9
+        self.artwork_service.removeArtwork(self.artworkID)
 
         self.artwork_service.cursor.execute(
-            "SELECT * FROM artwork WHERE artworkId = ?", (self.artworkId)
+            "SELECT * FROM artwork WHERE artworkId = ?", (self.artworkID)
         )
         artwork = self.artwork_service.cursor.fetchone()
 

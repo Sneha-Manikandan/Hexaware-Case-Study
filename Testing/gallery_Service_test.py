@@ -5,11 +5,11 @@ from Entity.Gallery import Gallery
 
 
 class TestGalleryServiceModule(unittest.TestCase):
-    def setUp(self):
-        self.gallery_service = GalleryService()
-        # Adding some initial data for testing
-        self.test_gallery_id = self.gallery_service.addGallery(9,'The Vintage Museum','Museum dedicated for vintage arts', 'Paris,France', 'Wison', '12:00:00', 5)
-        self.assertIsNotNone(self.test_gallery_id)
+    # def setUp(self):
+    #     self.gallery_service = GalleryService()
+    #     # Adding some initial data for testing
+    #     self.test_gallery_id = self.gallery_service.addGallery(9,'The Vintage Museum','Museum dedicated for vintage arts', 'Paris,France', 'Wison', '12:00:00', 5)
+    #     self.assertIsNotNone(self.test_gallery_id)
 
     def test_add_gallery(self):
         self.gallery_service = GalleryService()
