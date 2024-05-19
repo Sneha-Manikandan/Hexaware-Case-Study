@@ -1,6 +1,6 @@
 
 CREATE TABLE [Artist] (
-  [artistID] int ,
+  [artistID] int IDENTITY(1,1),
   [name] varchar(255),
   [biography] varchar(255),
   [birthDate] date,
@@ -13,34 +13,32 @@ CREATE TABLE [Artist] (
 
 
 CREATE TABLE [Artwork] (
-  [artworkID] int ,
-  [description] varchar(255),
+  [artworkID] int IDENTITY (1,1),
   [title] varchar(255),
+  [description] varchar(255),
   [creationDate] date,
   [medium] varchar(255),
   [imageURL] varchar(255),
-  [artistID] int,
   PRIMARY KEY ([artworkID]),
-  FOREIGN KEY ([artistID]) REFERENCES Artist([artistID]) 
 );
 
 
 
 CREATE TABLE [UserTable] (
-  [userID] int ,
+  [userID] int IDENTITY(1,1),
   [username] varchar(255),
   [password] varchar(200),
   [email] varchar(255),
   [firstName] varchar(200),
   [lastName] varchar(200),
   [dateOfBirth] date,
-  [picture] varchar(255),
+  [profilePicture] varchar(255),
   [favoriteArtworks] int,
   PRIMARY KEY ([userID])
 );
 
 CREATE TABLE [Gallery] (
-  [galleryID] int ,
+  [galleryID] int IDENTITY(1,1) ,
   [name] varchar(200),
   [description] varchar(255),
   [location] varchar(255),
@@ -64,5 +62,4 @@ CREATE TABLE [Artwork_Gallery] (
   FOREIGN KEY ([artworkID]) REFERENCES Artwork([artworkID]),
   FOREIGN KEY ([galleryID]) REFERENCES Gallery([galleryID])
 );
-
 

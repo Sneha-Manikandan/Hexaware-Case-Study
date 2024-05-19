@@ -25,14 +25,12 @@ class MainMenu:
                     artworkId=int(input("Enter Artwork Id: "))
                     self.artwork_service.getArtworkById(artworkId)
                 elif choice==3:
-                    artworkId=int(input("Enter the id of the artwork: "))
-                    description=input("Enter the description of the artwork: ")
                     title=input("Enter the title of the artwork: ")
+                    description=input("Enter the description of the artwork: ")
                     creationDate=input("When was the artwork created? : ")
                     medium=input("Enter the medium of the artwork: ")
                     imageURL=input("Give the url of the artwork: ")
-                    artistID=input("Enter artist id: ")
-                    new_artwork=Artwork(artworkId,description,title,creationDate,medium,imageURL,artistID)
+                    new_artwork=Artwork(title,description,creationDate,medium,imageURL)
                     self.artwork_service.addArtwork(new_artwork)
                 elif choice==4:
                     self.artwork_service.readArtwork()
@@ -41,13 +39,12 @@ class MainMenu:
                 elif choice==5:
                     self.artwork_service.readArtwork()
                     artworkId=input("Enter the ArtworkId you want to update: ")
-                    description=input("Enter the description of the artwork: ")
                     title=input("Enter the title of the artwork: ")
+                    description=input("Enter the description of the artwork: ")
                     creationDate=input("When was the artwork created? : ")
                     medium=input("Enter the medium of the artwork: ")
                     imageURL=input("Give the url of the artwork: ")
-                    artistID=input("Enter artist id: ")
-                    self.artwork_service.updateArtwork(artworkId,description,title,creationDate,medium,imageURL,artistID)
+                    self.artwork_service.updateArtwork(artworkId,title,description,creationDate,medium,imageURL)
                 elif choice==6:
                     print("Thank You !!!")
                     break
@@ -68,14 +65,13 @@ class MainMenu:
             if choice==1:
                 self.artist_service.readArtist()
             elif choice==2:
-                artistId=int(input("Enter the Artist ID: "))
                 name=input("Enter Artist name: ")
                 biography=input("Enter Artist biography: ")
                 birthDate=input("Enter Artist birthdate: ")
                 nationality=input("Enter Artist nationality: ")
                 website=input("Enter Artist website: ")
                 contactInformation=input("Enter Artist contact information: ")
-                new_artist=Artist(artistId,name,biography,birthDate,nationality,website,contactInformation)
+                new_artist=Artist(name,biography,birthDate,nationality,website,contactInformation)
                 self.artist_service.addArtist(new_artist)
             elif choice==3:
                 self.artist_service.readArtist()
@@ -113,7 +109,6 @@ class MainMenu:
                 userId=int(input("Enter UserId: "))
                 self.user_service.readUserById(userId)
             elif choice==3:
-                userId=int(input("Enter the User ID: "))
                 username=input("Enter Username: ")
                 password=input("Enter Password: ")
                 email=input("Enter Email: ")
@@ -122,7 +117,7 @@ class MainMenu:
                 dateOfBirth=input("Enter Date of Birth: ")
                 profilePicture=input("Upload Picture: ")
                 favoriteArtworks=input("Enter Favorite Artist Id: ")
-                new_user=User(userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks)
+                new_user=User(username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks)
                 self.user_service.addUser(new_user)
             elif choice==4:
                 self.user_service.readUser()
@@ -158,14 +153,13 @@ class MainMenu:
             if choice == 1:
                 self.gallery_service.readGallery()
             elif choice == 2:
-                galleryId = int(input("Enter the Gallery ID: "))
                 name = input("Enter Gallery name: ")
                 description = input("Enter Gallery description: ")
                 location = input("Enter Gallery location: ")
                 curator = input("Enter Gallery curator: ")
                 openingHours = input("Enter Gallery opening hours: ")
                 artistId = int(input("Enter Artist ID: "))
-                self.gallery_service.addGallery(galleryId,name, description, location, curator, openingHours, artistId)
+                self.gallery_service.addGallery(name, description, location, curator, openingHours, artistId)
             elif choice == 3:
                 self.gallery_service.readGallery()
                 galleryId = int(input("Enter the Gallery Id you want to remove: "))

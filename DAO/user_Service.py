@@ -42,11 +42,11 @@ class UserService(IUserService,DBConnection):
             print(e)
 
     def addUser(self,new_user):
-        try:
-            self.cursor.execute("Insert INTO userTable (userId,username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks) VALUES(?,?,?,?,?,?,?,?,?)",
-                        (new_user.userId,new_user.username,new_user.password,new_user.email,new_user.firstName,new_user.lastName,new_user.dateOfBirth,new_user.profilePicture,new_user.favoriteArtworks)
-                        )
-            
+        try: 
+            self.cursor.execute("Insert INTO userTable (username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks) VALUES(?,?,?,?,?,?,?,?)",
+                            (new_user.username,new_user.password,new_user.email,new_user.firstName,new_user.lastName,new_user.dateOfBirth,new_user.profilePicture,new_user.favoriteArtworks)
+                            )
+                
             self.conn.commit()  
         except Exception as e:
             print(e)
@@ -54,11 +54,18 @@ class UserService(IUserService,DBConnection):
 
     def removeUser(self,UserId):
         try:
-            self.cursor.execute("Delete FROM userTable WHERE userId=?",
-                        (UserId)
-                        )
-            
-            self.conn.commit()
+            self.cursor.execute("SELECT * FROM UserTable WHERE userID = ?", (UserId))
+            user = self.cursor.fetchone()
+            if user is None:
+                raise UserNotFoundException(UserId)
+            else:
+                self.cursor.execute("Delete FROM userTable WHERE userId=?",
+                            (UserId)
+                            )
+                
+                self.conn.commit()
+        except UserNotFoundException as e:
+            print("Error!!",e)       
         except Exception as e:
             print(e)
        
@@ -68,7 +75,7 @@ class UserService(IUserService,DBConnection):
             self.cursor.execute("Update UserTable SET username = ?, password = ?, email = ?, firstName = ?, lastName = ?, dateOfBirth = ?, profilePicture = ?, favoriteArtworks = ? WHERE userId=?",
                         (username,password,email,firstName,lastName,dateOfBirth,profilePicture,favoriteArtworks,userId)
                         )
-            # self.conn.commit()
+            self.conn.commit()
         except Exception as e:
             print(e)
             

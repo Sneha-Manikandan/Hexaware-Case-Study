@@ -1,5 +1,6 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
+from myexceptions import GalleryNotFoundException
 
 
 class IGalleryService(ABC):
@@ -28,23 +29,31 @@ class GalleryService(IGalleryService,DBConnection):
             print(e)
             return None
 
-    def addGallery(self,galleryId,name, description, location, curator, openingHours, artistId):
+    def addGallery(self,name, description, location, curator, openingHours, artistId):
         try:
-            self.cursor.execute("insert INTO gallery (galleryId,name, description, location, curator, openingHours, artistID) VALUES(?,?,?,?,?,?,?)",
-                                (galleryId,name, description, location, curator, openingHours, artistId))
+            self.cursor.execute("insert INTO gallery (name, description, location, curator, openingHours, artistID) OUTPUT inserted.galleryID VALUES(?,?,?,?,?,?)",
+                                (name, description, location, curator, openingHours, artistId))
             
+            new_gallery_id = self.cursor.fetchone()[0]
             self.conn.commit() 
-            return galleryId
+            return new_gallery_id
         except Exception as e:
             print(e)
             return None
        
     def removeGallery(self,galleryId):
         try:
-            self.cursor.execute("Delete from artwork_gallery where galleryId=?",(galleryId))
-            self.cursor.execute("Delete FROM gallery WHERE galleryId=?",(galleryId))                                   
-            
-            self.conn.commit()
+            self.cursor.execute("SELECT * FROM Gallery WHERE galleryID = ?", (galleryId))
+            gallery = self.cursor.fetchone()
+            if gallery is None:
+                raise GalleryNotFoundException(galleryId)
+            else:
+                self.cursor.execute("Delete from artwork_gallery where galleryId=?",(galleryId))
+                self.cursor.execute("Delete FROM gallery WHERE galleryId=?",(galleryId))                                   
+                
+                self.conn.commit()
+        except GalleryNotFoundException as e:
+            print("Error!!",e)
         except Exception as e:
             print(e)
        

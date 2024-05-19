@@ -1,6 +1,8 @@
 from Util.DBConn import DBConnection
 from abc import ABC,abstractmethod
 
+from myexceptions import ArtistNotFoundException
+
 class IArtistService(ABC):
     @abstractmethod
     def readArtist(self):
@@ -26,23 +28,25 @@ class ArtistService(IArtistService,DBConnection):
 
     def addArtist(self,new_artist):
         try:
-            self.cursor.execute("insert INTO artist (artistId,name,biography,birthDate,nationality,website,contactInformation) VALUES(?,?,?,?,?,?,?)",
-                        (new_artist.artistId,new_artist.name,new_artist.biography,new_artist.birthDate,new_artist.nationality,new_artist.website,new_artist.contactInformation)
+            self.cursor.execute("insert INTO artist (name,biography,birthDate,nationality,website,contactInformation) VALUES(?,?,?,?,?,?)",
+                        (new_artist.name,new_artist.biography,new_artist.birthDate,new_artist.nationality,new_artist.website,new_artist.contactInformation)
                         )
             
-            # self.conn.commit() 
+            self.conn.commit() 
         except Exception as e:
             print(e)
 
     def removeArtist(self,artistId):
         try:
-            self.cursor.execute("DELETE FROM Artwork_Gallery WHERE artworkID IN (SELECT artworkID FROM Artwork WHERE artistID = ?)", (artistId,))
-            self.cursor.execute("DELETE FROM User_Favorite_Artwork WHERE artworkID IN (SELECT artworkID FROM Artwork WHERE artistID = ?)", (artistId,))
-            self.cursor.execute("delete FROM gallery WHERE artistId=?",(artistId))
-            self.cursor.execute("delete FROM artwork WHERE artistId=?",(artistId))
-            self.cursor.execute("delete FROM artist WHERE artistId=?",(artistId))
-                        
-            # self.conn.commit()
+            self.cursor.execute("SELECT * FROM Artist WHERE artistID = ?", (artistId,))
+            artwork = self.cursor.fetchone()
+            if artwork is None:
+                raise ArtistNotFoundException(artistId)
+            else:
+                self.cursor.execute("delete FROM gallery WHERE artistId=?",(artistId))
+                self.cursor.execute("delete FROM artist WHERE artistId=?",(artistId))
+                            
+                self.conn.commit()
         except Exception as e:
             print(e)
        
@@ -52,7 +56,7 @@ class ArtistService(IArtistService,DBConnection):
             self.cursor.execute("Update Artist SET name = ?, biography = ?, birthDate = ?, nationality = ?, website = ?, contactInformation = ? WHERE ArtistId=?",
                         (name,biography,birthDate,nationality,website,contactInformation,artistId)
                         )
-            # self.conn.commit()
+            self.conn.commit()
         except Exception as e:
             print(e)
             

@@ -1,6 +1,5 @@
 class Artist:
-    def __init__(self, artistId, name, biography, birthDate, nationality, website, contactInformation):
-        self.artistId = artistId
+    def __init__(self,name, biography, birthDate, nationality, website, contactInformation):
         self.name = name
         self.biography = biography
         self.birthDate = birthDate
