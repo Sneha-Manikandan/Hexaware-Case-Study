@@ -49,7 +49,7 @@ class TestGalleryServiceModule(unittest.TestCase):
         self.assertEqual(updated_gallery[6], artistId)
 
     def test_delete_gallery(self):
-        self.galleryId=6
+        self.galleryId=7
         self.gallery_service.removeGallery(self.galleryId)
 
         self.gallery_service.cursor.execute(
