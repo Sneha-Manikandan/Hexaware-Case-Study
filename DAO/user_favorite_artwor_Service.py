@@ -35,7 +35,7 @@ class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection,):
             self.cursor.execute("""select u.userid,a.artworkID, a.title,a.description,  a.creationDate, a.medium, a.imageURL from User_Favorite_Artwork u
                             inner join artwork a on u.artworkID=a.artworkID
                             group by u.userid,a.artworkID, a.description, a.title, a.creationDate, a.medium, a.imageURL
-                            having userId=?""",(userId))
+                            having u.userId=?""",(userId))
             favorite_artwork=self.cursor.fetchall()
             for artwork in favorite_artwork:
                 print(artwork)

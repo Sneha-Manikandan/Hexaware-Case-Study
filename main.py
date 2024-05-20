@@ -192,7 +192,6 @@ class MainMenu:
             if choice == 1:
                 self.user_favorite_artwork_service.getUserFavoriteArtwork()
             elif choice == 2:
-                self.user_favorite_artwork_service.getUserFavoriteArtwork()
                 userId = input("Enter userId: ")
                 self.user_favorite_artwork_service.getUserFavoriteArtworksbyId(userId)
             elif choice == 3:

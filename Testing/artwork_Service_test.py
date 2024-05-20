@@ -48,7 +48,7 @@ class TestArtworkyServiceModule(unittest.TestCase):
         self.assertEqual(updated_artwork[5], imageURL)
 
     def test_delete_artwork(self):
-        self.artworkID=8
+        self.artworkID=11
         self.artwork_service.removeArtwork(self.artworkID)
 
         self.artwork_service.cursor.execute(
