@@ -244,7 +244,7 @@ def main():
         
 
 if __name__=="__main__":
-    print("WELCOME TO MOVIES APP")
+    print("WELCOME TO VIRTUAL ARTWORK MANAGEMENT")
     main_menu=MainMenu()
     main()
     
