@@ -18,7 +18,7 @@ class IUserFavoriterArtwork(ABC):
     def removeArtworkFromFavorite(self,userId,artworkId):
         pass
 
-class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection,):
+class UserFavoriteArtworkService(IUserFavoriterArtwork,DBConnection):
     def getUserFavoriteArtwork(self):
         try:
             self.cursor.execute("""select u.userid,a.artworkID, a.title,a.description,  a.creationDate, a.medium, a.imageURL from User_Favorite_Artwork u

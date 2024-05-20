@@ -1,5 +1,5 @@
-from Entity import Artwork,Artist,User,Gallery,User_Favorite_Artwork
-from DAO import ArtworkService,ArtistService,UserService,GalleryService,UserFavoriteArtworkService
+from Entity import Artwork,Artist, Artwork_Gallery,User,Gallery,User_Favorite_Artwork
+from DAO import ArtworkService,ArtistService,UserService,GalleryService,UserFavoriteArtworkService,ArtworkGalleryService
 
 class MainMenu:  
     artwork_service=ArtworkService() 
@@ -7,6 +7,7 @@ class MainMenu:
     user_service=UserService()
     gallery_service=GalleryService()
     user_favorite_artwork_service=UserFavoriteArtworkService()
+    artwork_gallery_service=ArtworkGalleryService()
 
     def artwork_menu(self):
             while True:
@@ -208,6 +209,35 @@ class MainMenu:
             else:
                 print("Invalid")
 
+    def artwork_gallery_menu(self):
+        while True:
+            print("""
+                1. Display Artwork Gallery
+                2. Display Gallery by ArtworkId
+                3. Add Artwork to Gallery
+                4. Remove Artwork Gallery
+                5. Exit
+                """)
+            choice = int(input("Enter the choice you want to do: "))
+            if choice == 1:
+                self.artwork_gallery_service.getArtworkGallery()
+            elif choice == 2:
+                artworkId = input("Enter ArtworkId: ")
+                self.artwork_gallery_service.getArtworkGallerybyId(artworkId)
+            elif choice == 3:
+                artworkId = input("Enter ArtworkId: ")
+                galleryId = input("Enter GalleryId: ")
+                new_artworkGallery=Artwork_Gallery(artworkId,galleryId)
+                self.artwork_gallery_service.addArtworkToGallery(new_artworkGallery)
+            elif choice == 4:
+                artworkId = input("Enter artworkId: ")
+                galleryId = input("Enter galleryId: ")
+                self.artwork_gallery_service.removeArtworkFromGallery(artworkId,galleryId)
+            elif choice == 5:
+                break
+            else:
+                print("Invalid")
+
 def main():
     while True:
             print("""
@@ -216,7 +246,8 @@ def main():
                 3. User Management
                 4. Gallery Management
                 5. Favorite Artwork Management
-                6. Exit
+                6. Artwork Gallery Management
+                7. Exit
                 """)
             choice=int(input("Please choose what you want to do: "))
             if(choice==1):
@@ -230,6 +261,8 @@ def main():
             elif(choice==5):
                 main_menu.user_favorite_artwork_menu()
             elif(choice==6):
+                main_menu.artwork_gallery_menu()
+            elif(choice==7):
                 print("Thank You !!")
                 main_menu.artwork_service.close()
                 main_menu.artist_service.close()
