@@ -4,6 +4,7 @@ from DAO.artwork_Service import ArtworkService
 from Entity.Artwork import Artwork
 
 
+
 class TestArtworkyServiceModule(unittest.TestCase):
     def setUp(self):
         self.artwork_service = ArtworkService()
@@ -48,7 +49,7 @@ class TestArtworkyServiceModule(unittest.TestCase):
         self.assertEqual(updated_artwork[5], imageURL)
 
     def test_delete_artwork(self):
-        self.artworkID=11
+        self.artworkID=15
         self.artwork_service.removeArtwork(self.artworkID)
 
         self.artwork_service.cursor.execute(
