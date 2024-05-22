@@ -269,6 +269,7 @@ def main():
                 main_menu.user_service.close()
                 main_menu.gallery_service.close()
                 main_menu.user_favorite_artwork_service.close()
+                main_menu.artwork_gallery_service.close()
                 break
             else:
                 print("Invalid! Enter proper choice")
